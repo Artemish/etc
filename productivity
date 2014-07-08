@@ -1,0 +1,19 @@
+#!/bin/bash
+
+HOSTFILE=/etc/hosts
+TMPHOSTS=/tmp/fakehosts
+BACKUP=~/Backups/hosts
+
+for site in "facebook.com" "reddit.com"
+do
+  cp $HOSTFILE $BACKUP;
+  dummy=`grep $site $HOSTFILE`;
+  case $? in
+    1)  echo "127.0.0.1	" $site >> $HOSTFILE ;;
+    0) 
+      sed "/$site/d" $HOSTFILE > $TMPHOSTS;
+      mv $TMPHOSTS $HOSTFILE;;
+    *) echo "Grep failed.";;
+  esac
+done
+

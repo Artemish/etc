@@ -1,0 +1,1 @@
+Since I've lost useful scripts and nice config files more than once to a failed hard drive, I've decided to keep them up on github for personal use. If you find them useful or interesting feel free to use them with or without attribution.
