@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# A bash script to block all communication with the given domain
+# by routing attempts to access it to localhost. Will block access
+# to the site unless you're running a local copy. Overwrites /etc/hosts
+# and is thus, very likely, highly unsafe. If you wish to run it
+# without having to sudo, add this script to the list of scripts
+# which don't prompt for sudo access.
+
 HOSTFILE=/etc/hosts
 TMPHOSTS=/tmp/fakehosts
 BACKUP=~/Backups/hosts
