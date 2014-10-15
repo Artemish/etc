@@ -87,10 +87,18 @@ alias la='ls -A'
 alias l='ls -CF'
 alias c='clear'
 alias ..='cd ../'
+alias ~="cd ~/"
+alias ic='ping google.com'
+alias x='exit'
+alias lsd='ls -d */'
+alias svnlog='svn log -v --limit 6 | less'
 
 export HISTIGNORE=' *'
 
+mr() { mpg123 --pitch $1 -Z ~/Music/weeaboo/*; }
 mkcd() { mkdir "$1" && cd "$1"; }
+
+FIGNORE='.o:.cmo:.cmx:.cmi'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
