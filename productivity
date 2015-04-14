@@ -11,12 +11,13 @@ HOSTFILE=/etc/hosts
 TMPHOSTS=/tmp/fakehosts
 BACKUP=~/Backups/hosts
 
-for site in "facebook.com" "reddit.com"
+for site in "facebook.com" "reddit.com" "smbc-comics.com" "xkcd.com"
 do
   cp $HOSTFILE $BACKUP;
   dummy=`grep $site $HOSTFILE`;
   case $? in
-    1)  echo "127.0.0.1	" $site >> $HOSTFILE ;;
+    1)  echo "127.0.0.1	" $site >> $HOSTFILE ;
+        echo "127.0.0.1	" "www.$site" >> $HOSTFILE ;;
     0) 
       sed "/$site/d" $HOSTFILE > $TMPHOSTS;
       mv $TMPHOSTS $HOSTFILE;;
