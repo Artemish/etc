@@ -81,31 +81,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-alias c='clear'
-alias ..='cd ../'
-alias ~="cd ~/"
-alias ic='ping google.com'
-alias x='exit'
-alias lsd='ls -d */'
-alias svnlog='svn log -v --limit 6 | less'
-alias fnd='find ./ -name '
-
-export HISTIGNORE=' *'
-
-mr() { mpg123 --pitch $1 -Z ~/Music/weeaboo/*; }
-mkcd() { mkdir "$1" && cd "$1"; }
-
-db() {
-  TEYJUS="/home/mitch/RenamingRedux";
-  SOURCE="$TEYJUS/source";
-  ocamldebug -I $SOURCE/compiler $SOURCE/front $SOURCE/linker $SOURCE/${1}.run $2;
-}
-
 FIGNORE='.o:.cmo:.cmx:.cmi'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -127,6 +102,26 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias c='clear'
+alias ..='cd ../'
+alias ~="cd ~/"
+alias ic='ping google.com'
+alias x='exit'
+alias lsd='ls -d */'
+alias svnlog='svn log -v --limit 6 | less'
+alias fnd='find ./ -name '
+
+export HISTIGNORE=' *'
+
+mr() { mpg123 --pitch "${1}" -Z ~/Music/weeaboo/*; }
+
+mkcd() { mkdir "$1" && cd "$1"; }
 
 up() {
     #======================================================================
@@ -187,7 +182,7 @@ up() {
     if [[ "$targetDir" != "$PWD" ]]; then
         cd "$targetDir" || return 2 # if cd fails
     else
-        return -1 # nothing to do (exit code = 255)
+        return 255 # nothing to do (exit code = 255)
     fi
 }
 
@@ -234,7 +229,39 @@ goto() {
   fi
 }
 
-randwallpaper() {
+function pgrep() {
+  ps aux | grep "${1}" | grep -v grep;
+}
+
+function countdown() {
+  date1=$(($(date +%s) + $1));
+  while [ "$date1" -ne $(date +%s) ]; do
+    echo -ne "$(date -u --date @$(($date1 - $(date +%s))) +%H:%M:%S)\r";
+    sleep 0.1
+  done
+}
+
+function stopwatch(){
+  date1=`date +%s`;
+  while true; do
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
+    sleep 0.1
+  done
+}
+
+function localip() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: localip interface"
+  fi
+  RES=$(ifconfig | sed -ne "/^${1}: /"',$p' | grep -m 1 'inet ' | awk '{print $2}')
+  if [ "$RES" ]; then
+    echo "$RES"
+  else
+    echo "interface '${1}' not found"
+  fi
+}
+
+function randwallpaper() {
   pushd /home/mitch/Pictures/Wallpapers > /dev/null
   entries=`ls | wc -l`
   n=$RANDOM
@@ -255,8 +282,7 @@ if (length($0) > 30) {
   else print $1 "/.../" $NF;
 }
 else print $0;}'"'"')'
-PS1='$(eval "echo ${MYPS}")$ '
-PS1="\[\e[0;31m\]\u:$PS1\[\e[m\]"
+PS1='$(eval "echo ${MYPS}")'
+PS1="\[\e[0;36m\]\u \[\e[0;32m\]$PS1\[\e[m\] \[\e[0;31m\]$\[\e[m\] "
 
 . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
-
