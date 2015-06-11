@@ -233,6 +233,10 @@ function pgrep() {
   ps aux | grep "${1}" | grep -v grep;
 }
 
+cols() {
+  awk '{ print $'"$1"' }'
+}
+
 function countdown() {
   date1=$(($(date +%s) + $1));
   while [ "$date1" -ne $(date +%s) ]; do

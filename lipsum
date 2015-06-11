@@ -1,0 +1,33 @@
+#!/usr/bin/python
+
+import sys
+import random
+import textwrap
+
+lipsum = ['in', 'et', 'at', 'et', 'eu', 'eu', 'mi', 'et', 'sit', 'dui', 'sem', 'nec', 'est', 'nec', 'sed', 'amet', 'elit', 'nisi', 'eget', 'orci', 'quis', 'eget', 'quis', 'erat', 'enim', 'Lorem', 'ipsum', 'dolor', 'augue', 'dolor', 'augue', 'Etiam', 'neque', 'tempor', 'semper', 'turpis', 'nullam', 'tellus', 'tempus', 'tempor', 'libero', 'sapien', 'mauris', 'aenean', 'turpis', 'congue', 'laoreet', 'sodales', 'posuere', 'aliquam', 'sodales', 'vivamus', 'gravida', 'pretium', 'pretium', 'praesent', 'accumsan', 'eleifend', 'accumsan', 'bibendum', 'dignissim', 'efficitur', 'imperdiet', 'malesuada', 'adipiscing', 'vestibulum', 'vestibulum', 'consectetur', 'suspendisse', 'ullamcorper', 'condimentum', 'consectetur', 'pellentesque']
+
+def sentence():
+  words = random.randint(5,11)
+  res=""
+  for i in xrange(words - 1):
+    res += random.choice(lipsum)
+    if (random.random() > 0.85):
+      res += ','
+    res += " "
+  res = res + random.choice(lipsum) + "."
+  res = res.capitalize()
+  return res
+
+def paragraph():
+  sentences = random.randint(7, 14)
+  content = ' '.join([sentence() for i in xrange(sentences)])
+  return textwrap.fill(content, 90)
+
+if (len(sys.argv) < 2):
+  # foreverrr
+  paragraphs = 4
+else:
+  paragraphs = int(sys.argv[1])
+
+for i in xrange(paragraphs):
+  print paragraph() + "\n"
