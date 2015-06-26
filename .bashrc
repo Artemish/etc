@@ -274,6 +274,21 @@ function localip() {
   fi
 }
 
+toip() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: toip name"
+    return 1
+  fi
+
+  RES="$(dig +short $1 | head -n 1)"
+  if [ "${RES}" ]; then
+    echo "${RES}"
+  else
+    echo "Hostname $1 not found"
+  fi
+}
+  
+
 # Directory path shortener
 export MYPS='$(echo -n "${PWD/$HOME/"~"}" |
 awk -F "/" '"'"'{
