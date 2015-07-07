@@ -306,6 +306,14 @@ YELLOW="\[\e[1;33m\]"
 BLUE="\[\e[0;36m\]"
 UNCOLOR="\[\e[m\]"
 
+# Hash the hostname into a unique prompt color
+{ 
+  local HOSTHASH, COLORCODE
+  HOSTHASH="$(printf "%d" 0x$(echo $HOSTNAME | md5sum))"
+  COLORCODE=$(echo "(${HOSTHASH} % 6) + 31" | bc)
+  HOSTCOLOR="\[\e[0;${COLORCODE}m\]"
+} 2> /dev/null || HOSTCOLOR=$YELLOW
+
 # Color my name red if I'm root, can't be too careful
 if [ $(whoami) == root ]; then
   UCOLOR=${RED}
@@ -313,6 +321,6 @@ else
   UCOLOR=${BLUE}
 fi
 
-PS1="${UCOLOR}\u@${YELLOW}\h ${GREEN}$PS1 ${RED}\$${UNCOLOR} "
+PS1="${UCOLOR}\u@${HOSTCOLOR}\h ${GREEN}$PS1 ${RED}\$${UNCOLOR} "
 
 set -o vi
