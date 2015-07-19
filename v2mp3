@@ -1,14 +1,14 @@
-#!/bin/bash
-
-TEMP="/tmp/v2mp3.tmp"
+#!/bin/sh
 
 if [ "$#" -ne 2 ]; then
   echo "Usage: v2mp3 [url] [name]";
   exit
 fi
 
+TEMP="$(mktemp v2mp3.XXXXX)"
+
 youtube-dl $1 -o "$TEMP"
 
-avconv -i "$TEMP" -acodec libmp3lame "$2"
+avconv -i "$TEMP" -acodec libmp3lame -vn "$2"
 
 rm $TEMP
