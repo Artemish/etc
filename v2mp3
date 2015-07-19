@@ -1,14 +1,36 @@
 #!/bin/sh
 
-if [ "$#" -ne 2 ]; then
-  echo "Usage: v2mp3 [url] [name]";
+KEEP="false"
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage: v2mp3 url [name]";
   exit
 fi
 
-TEMP="$(mktemp v2mp3.XXXXX)"
+while getopts ":k" opt; do
+  case $opt in
+    k)
+      KEEP="true";;
+    \?)
+      echo "Invalid option: -$OPTARG"
+  esac
+  shift 1
+done
 
-youtube-dl $1 -o "$TEMP"
+FILENAME="$(youtube-dl --get-filename "$1")"
+EXT="${FILENAME##*.}"
+FILENAME="${FILENAME%.*}"
 
-avconv -i "$TEMP" -acodec libmp3lame -vn "$2"
+if [ -z "$2" ]; then
+  OUTPUT="${FILENAME}.mp3"
+else
+  OUTPUT="$2"
+fi
 
-rm $TEMP
+youtube-dl "$1" -o "${FILENAME}.${EXT}"
+
+avconv -i "${FILENAME}.${EXT}" -acodec libmp3lame -vn "${OUTPUT}"
+
+if [ "$KEEP" = "false" ]; then
+  rm "${FILENAME}.${EXT}";
+fi
