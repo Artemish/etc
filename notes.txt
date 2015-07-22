@@ -1,0 +1,53 @@
+reverse DNS lookup -
+  dig -x IP_Address
+
+Want to use sed(1) to edit a file in place?  Well, to replace every 'e' with
+an 'o', in a file named 'foo', you can do:
+
+	sed -i.bak s/e/o/g foo
+
+serve current directory tree at hostname:8000
+python -m SimpleHTTPServer
+
+pipe to "column -t" to arrange things nicely
+
+mount a RAM partition
+mount -t tmpfs tmpfs /mnt -o size=1024m
+
+Just as C-U clears your command, C-Y can get it back again
+
+Put a console clock at the top right of your screen
+while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &
+
+CDPATH=:..:~ etc
+as an alternative to goto
+
+intercept stdout/stderr of another process
+strace -ff -e trace=write -e write=1,2 -p SOME_PID
+
+With 'kill': generally, send 15, and wait a second or two, and if that doesn't work, send
+2, and if that doesn't work, send 1. If that doesn't, REMOVE THE BINARY
+because the program is badly behaved!
+
+The syntax is as follows to rename by user name:
+usermod -l login-name old-name
+
+Get rid of grey bar on the left of vim
+:set foldcolumn=0
+
+Delete lines containing pattern:
+g/pattern/d
+
+Back to previous location:
+ctrl+O
+
+Back to last change:
+`.
+
+If you want to override or append to the name servers suggested by the DHCP
+server, you can configure this in /etc/dhcp/dhclient.conf, eg:
+
+interface "eth0" {
+    prepend domain-name-servers 10.0.0.2;
+}
+
