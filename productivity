@@ -1,27 +1,33 @@
-#!/bin/bash
+#!/bin/sh
 
 # A bash script to block all communication with the given domain
 # by routing attempts to access it to localhost. Will block access
-# to the site unless you're running a local copy. Overwrites /etc/hosts
-# and is thus, very likely, highly unsafe. If you wish to run it
-# without having to sudo, add this script to the list of scripts
-# which don't prompt for sudo access.
+# to the site unless you're running a local copy. Overwrites /etc/hosts,
+# so use at your own risk :)
+
+# Writes to a backup file, /etc/hosts.bak 
 
 HOSTFILE=/etc/hosts
-TMPHOSTS=/tmp/fakehosts
-BACKUP=~/Backups/hosts
+
+if [ ! -w "$HOSTFILE" ]; then
+  >&2 echo "productivity requires write privileges to ${HOSTFILE}."
+  exit 1
+fi
+
+# Saves the backup
+cp "$HOSTFILE" "${HOSTFILE}.bak"
+
+PRODUCTIVITY="off"
 
 for site in "facebook.com" "reddit.com" "smbc-comics.com" "xkcd.com"
 do
-  cp $HOSTFILE $BACKUP;
-  dummy=`grep $site $HOSTFILE`;
-  case $? in
-    1)  echo "127.0.0.1	" $site >> $HOSTFILE ;
-        echo "127.0.0.1	" "www.$site" >> $HOSTFILE ;;
-    0) 
-      sed "/$site/d" $HOSTFILE > $TMPHOSTS;
-      mv $TMPHOSTS $HOSTFILE;;
-    *) echo "Grep failed.";;
-  esac
+  found=$(grep -P "127.0.0.1\t${site}" $HOSTFILE)
+  if [ -z "$found" ]; then
+    PRODUCTIVITY="on"
+    printf "127.0.0.1\t%s www.%s\n" "$site" "$site" >> $HOSTFILE
+  else
+    sed -i -r "/127.0.0.1\t(www\.)?$site/d" $HOSTFILE
+  fi
 done
 
+echo "Productivity mode: $PRODUCTIVITY"
