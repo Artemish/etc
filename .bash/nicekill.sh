@@ -38,18 +38,23 @@ nkill() {
   fi
 
   kill -15 "$PID"
-  sleep 2
+  # Wait 2 seconds
+  for _ in [ 1 .. 8 ]; do
+    sleep 0.25
+    if ! pidrunning "$PID"; then 
+      return 0
+    fi
+  done
 
-  if ! pidrunning "$PID"; then 
-    return 0
-  fi
 
   kill -2 "$PID"
-  sleep 1
-
-  if ! pidrunning "$PID"; then 
-    return 0
-  fi
+  # Wait 1 second
+  for _ in [ 1 .. 4 ]; do
+    sleep 0.25
+    if ! pidrunning "$PID"; then 
+      return 0
+    fi
+  done
 
   kill -1 "$PID"
 
