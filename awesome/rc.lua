@@ -261,7 +261,20 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86AudioLowerVolume", function ()
          awful.util.spawn("amixer -c 2 set Master 9%-") end),
     awful.key({ }, "XF86AudioMute", function ()
-         awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end)
+         awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+
+    -- HJKL focus selection
+    awful.key({ modkey, }, "h", function ()
+         awful.client.focus.bydirection("left") end),
+
+    awful.key({ modkey, }, "j", function ()
+         awful.client.focus.bydirection("down") end),
+
+    awful.key({ modkey, }, "k", function ()
+         awful.client.focus.bydirection("up") end),
+
+    awful.key({ modkey, }, "l", function ()
+         awful.client.focus.bydirection("right") end)
 )
 
 clientkeys = awful.util.table.join(
@@ -329,20 +342,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
 
---- globalkeys = awful.util.table.join(globalkeys,
----     awful.key({ }, "XF86AudioRaiseVolume",
----              function ()
----                awful.util.spawn("amixer set Master 9%+")
----              end),
----    awful.key({ }, "XF86AudioLowerVolume",
----              function ()
----                awful.util.spawn("amixer set Master 9%-")
----              end),
----    awful.key({ }, "XF86AudioMute",
----              function ()
----                awful.util.spawn("amixer sset Master toggle")
----              end))
-
 -- Set keys
 root.keys(globalkeys)
 -- }}}
@@ -397,4 +396,4 @@ end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
+
