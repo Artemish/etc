@@ -53,3 +53,9 @@ interface "eth0" {
 
 Use 'rlwrap' to add readline support for interactive commands, i.e.
  $ rlwrap coqtop
+
+Set git's default editor:
+git config --global core.editor vim
+
+Find process using a file:
+sudo lsof file
