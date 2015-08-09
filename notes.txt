@@ -51,3 +51,5 @@ interface "eth0" {
     prepend domain-name-servers 10.0.0.2;
 }
 
+Use 'rlwrap' to add readline support for interactive commands, i.e.
+ $ rlwrap coqtop

@@ -23,7 +23,7 @@ UNCOLOR="\[\e[m\]"
 # Hash the hostname into a unique prompt color
 { 
   local HOSTHASH, COLORCODE
-  HOSTHASH="$(printf "%d" 0x$(echo $HOSTNAME | md5sum))"
+  HOSTHASH="$(echo $HOSTNAME | cksum | awk '{print $1}')"
   COLORCODE=$(echo "(${HOSTHASH} % 6) + 31" | bc)
   HOSTCOLOR="\[\e[0;${COLORCODE}m\]"
 } 2> /dev/null || HOSTCOLOR=$YELLOW
