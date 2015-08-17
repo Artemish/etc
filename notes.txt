@@ -72,3 +72,6 @@ git config --global core.editor vim
 
 Find process using a file:
 sudo lsof file
+
+The executable permission flag grants the right to traverse a directory but
+not read it.
