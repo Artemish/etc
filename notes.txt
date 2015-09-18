@@ -62,3 +62,6 @@ sudo lsof file
 
 To clear your DNS cache in Ubuntu:
  $ sudo /etc/init.d/dns-clean start
+
+The executable permission flag grants the right to traverse a directory but
+not read it.

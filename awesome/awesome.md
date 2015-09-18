@@ -10,7 +10,6 @@ Shift+[1-9]:	Send window to tag
 
 To test an awesome configuration:
 # Create an X subcreen
-Xephyr :1 -ac -br -noreset -screen 720x480 &
+Xephyr -ac -br -noreset -screen 720x480 :1.0 &
 # And start awesome in it
-export DISPLAY=:1.0 &
-awesome -c ~/.config/rc.lua
+DISPLAY=:1.0 awesome -c ~/.config/rc.lua
