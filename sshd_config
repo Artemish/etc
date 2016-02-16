@@ -1,0 +1,18 @@
+# You're not getting muh public keys
+PubkeyAuthentication no
+
+# It's kind of sad this has to be 'yes' by default
+PermitRootLogin no
+
+# Allow only me
+# Goes {Deny,Allow}Users, {Deny,Allow}Groups
+DenyUsers *
+AllowUsers mitch
+#
+AllowGroups mitch
+
+# Set this to be some random port for security
+Port xxx
+
+# You don't need 2m (the default) to login
+LoginGraceTime 30s
