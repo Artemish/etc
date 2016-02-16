@@ -69,3 +69,6 @@ Try out bevel greeter: https://github.com/jqln-0/Bevel
 
 List of all the XF86 keyboard symbol names:
 http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
+
+Install 'xev' and use the following one-liner to map keys to their names:
+xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
