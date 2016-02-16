@@ -296,6 +296,16 @@ globalkeys = awful.util.table.join(
          update_volume(volume_widget)
        end),
 
+    -- Brightness keys
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+         awful.util.spawn("xbacklight -inc 10 -steps 5 -time 100", false)
+         update_volume(volume_widget)
+       end),
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+         awful.util.spawn("xbacklight -dec 10 -steps 5 -time 100", false)
+         update_volume(volume_widget)
+       end),
+
     -- HJKL focus selection
     awful.key({ modkey, }, "h", function ()
          awful.client.focus.bydirection("left") end),

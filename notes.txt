@@ -65,3 +65,7 @@ To clear your DNS cache in Ubuntu:
 
 The executable permission flag grants the right to traverse a directory but
 not read it.
+Try out bevel greeter: https://github.com/jqln-0/Bevel
+
+List of all the XF86 keyboard symbol names:
+http://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
