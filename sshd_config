@@ -12,7 +12,7 @@ AllowUsers mitch
 AllowGroups mitch
 
 # Set this to be some random port for security
-Port xxx
+Port xxxxx
 
 # You don't need 2m (the default) to login
 LoginGraceTime 30s
