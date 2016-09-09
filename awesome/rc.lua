@@ -50,6 +50,9 @@ shutdown = "shutdown -P now"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
+rssowl = "rssowl"
+browser = "chromium"
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -97,6 +100,8 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "open terminal", terminal },
+                                    { "rssowl", rssowl },
+                                    { "chromium", browser },
                                     { "shut down", shutdown }
                                   }
                         })
@@ -482,3 +487,14 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+autorun = true
+autorunApps = {
+  "nm-applet",
+}
+
+if autorun then
+  for app = 1, #autorunApps do
+    awful.util.spawn(autorunApps[app])
+  end
+end

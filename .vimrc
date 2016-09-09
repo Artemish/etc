@@ -1,6 +1,8 @@
 syntax on
 filetype plugin indent on
 
+autocmd FileType ocaml source /home/mitch/.opam/4.02.3/share/ocp-indent/vim/indent/ocaml.vim
+
 set backspace=indent,eol,start
 set nocompatible              
 set expandtab
@@ -69,4 +71,3 @@ let g:syntastic_c_checkers=['avrgcc']
 let g:filetype_pl="prolog"
 
 execute pathogen#infect()
-
