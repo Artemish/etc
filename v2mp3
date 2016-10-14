@@ -29,7 +29,7 @@ fi
 
 youtube-dl "$1" -o "${FILENAME}.${EXT}"
 
-avconv -i "${FILENAME}.${EXT}" -acodec libmp3lame -vn "${OUTPUT}"
+ffmpeg -i "${FILENAME}.${EXT}" -acodec libmp3lame -vn "${OUTPUT}"
 
 if [ "$KEEP" = "false" ]; then
   rm "${FILENAME}.${EXT}";

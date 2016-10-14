@@ -42,12 +42,16 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(awful.util.getdir("config") .. "/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xterm"
-editor = os.getenv("EDITOR") or "nano"
+shutdown = "shutdown -P now"
+editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
+
+rssowl = "rssowl"
+browser = "chromium"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -63,14 +67,8 @@ local layouts =
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -87,7 +85,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ 1, 2, 3, 4, 5}, s, layouts[1])
 end
 -- }}}
 
@@ -101,7 +99,10 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+                                    { "open terminal", terminal },
+                                    { "rssowl", rssowl },
+                                    { "chromium", browser },
+                                    { "shut down", shutdown }
                                   }
                         })
 
@@ -292,18 +293,14 @@ globalkeys = awful.util.table.join(
          update_volume(volume_widget)
        end),
     awful.key({ }, "XF86AudioMute", function ()
-         awful.util.spawn("amixer -D pulse set Master 1+ toggle", false)
+         awful.util.spawn("amixer -D pulse set Master 1+ toggle")
          update_volume(volume_widget)
        end),
-
-    -- Brightness keys
     awful.key({ }, "XF86MonBrightnessUp", function ()
          awful.util.spawn("xbacklight -inc 10 -steps 5 -time 100", false)
-         update_volume(volume_widget)
        end),
     awful.key({ }, "XF86MonBrightnessDown", function ()
          awful.util.spawn("xbacklight -dec 10 -steps 5 -time 100", false)
-         update_volume(volume_widget)
        end),
 
     -- HJKL focus selection
@@ -490,3 +487,14 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+autorun = true
+autorunApps = {
+  "nm-applet",
+}
+
+if autorun then
+  for app = 1, #autorunApps do
+    awful.util.spawn(autorunApps[app])
+  end
+end
