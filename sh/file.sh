@@ -2,9 +2,9 @@
 
 fext() {
   if [ -z "${2}" ]; then
-    find . -name "*.${1}" 
+    find . -type f -name "*.${1}" 
   else
-    find . -maxdepth "${2}" -name "*.${1}" 
+    find . -type f -maxdepth "${2}" -name "*.${1}" 
   fi
 }
 
@@ -16,6 +16,22 @@ fn() {
   fi
 }
 
+ff() {
+  if [ -z "${2}" ]; then
+    find . -type f -iname "*${1}*" 
+  else
+    find . -type f -maxdepth "${2}" -iname "*${1}*" 
+  fi
+}
+
+fd() {
+  if [ -z "${2}" ]; then
+    find . -type d -iname "*${1}*" 
+  else
+    find . -type d -maxdepth "${2}" -iname "*${1}*" 
+  fi
+}
+
 vf() {
-    vim "$(fn "$@" | selecta)"
+    vim "$(ff "$@" | selecta)"
 }
