@@ -35,3 +35,7 @@ fd() {
 vf() {
     vim "$(ff "$@" | selecta)"
 }
+
+cfd() {
+    cd "$(fd "$@" | selecta)"
+}
