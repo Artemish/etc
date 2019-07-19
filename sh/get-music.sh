@@ -3,7 +3,7 @@
 getmusic() {
     if [ $# -ne 1 ]; then
         echo "Usage: getmusic <youtube_url>" 1>&2
-        exit 1
+        return 1
     fi
 
     pushd ~/what
