@@ -6,6 +6,7 @@ av() {
 
     file=$(ag -l "$@" | selecta)
     specific=$(ag --vimgrep --noheading "$@" "${file}" | selecta)
+    line="$(echo "$specific" | cut -d : -f2)"
 
-    vim "${file}:$(echo "$specific" | cut -d : -f2)"
+    vim "+${line}" "${file}"
 }
