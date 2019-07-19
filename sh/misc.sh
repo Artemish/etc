@@ -1,5 +1,5 @@
 includes() {
-    egrep "^#include" "$@"
+    grep -E "^#include" "$@"
 }
 
 argn() { echo $#; }
