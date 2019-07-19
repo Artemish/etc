@@ -4,7 +4,7 @@ fext() {
   if [ -z "${2}" ]; then
     find . -type f -name "*.${1}" 
   else
-    find . -type f -maxdepth "${2}" -name "*.${1}" 
+    find . -maxdepth "${2}" -type f -name "*.${1}" 
   fi
 }
 
@@ -20,7 +20,7 @@ ff() {
   if [ -z "${2}" ]; then
     find . -type f -iname "*${1}*" 
   else
-    find . -type f -maxdepth "${2}" -iname "*${1}*" 
+    find . -maxdepth "${2}" -type f -iname "*${1}*" 
   fi
 }
 
