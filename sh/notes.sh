@@ -1,5 +1,10 @@
 EDITOR=nvim
 
+_note_files() { 
+  FILES=($(find ~/notes -name '*.txt' | xargs -L 1 basename | sed 's/.txt//'))
+  COMPREPLY=($(compgen -W "${FILES[*]}" "${COMP_WORDS[1]}"))
+}
+
 notes() { 
   local DATE
   DATE=$(date +'%A_%F')
@@ -11,6 +16,8 @@ notes() {
   fi
   ${EDITOR} + "${FILE}"
 }
+
+complete -F _note_files notes
 
 log_entry() {
   local DATE
