@@ -1,8 +1,3 @@
-# Human information for pgrep
-pgrep() {
-  ps aux | grep $1 | grep -v grep;
-}
-
 # Print the nth column of output
 cols() {
   awk '{ print $'"$1"' }'
